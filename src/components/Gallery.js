@@ -14,3 +14,4 @@ function Gallery({ data }) {
 }
 
 export default Gallery
+

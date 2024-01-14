@@ -15,7 +15,6 @@ function App(){
         const url = `https://itunes.apple.com/search?term=${search}`
         const response = await fetch(url)
         const data = await response.json()
-        console.log(data)
 
         if (data.results.length) {
           setData(data.results)

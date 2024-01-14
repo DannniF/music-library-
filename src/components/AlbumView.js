@@ -1,14 +1,35 @@
 import { useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
+import NavButtons from './NavButtons'
 
 function AlbumView(){
     const { id } = useParams()
-    const [AlbumData, setAlbumData] = useState([])
+    const [albumData, setAlbumData] = useState([])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const url = `http://localhost:4000/song/${id}`
+            const response = await fetch(url)
+            const data = await response.json()
+
+            console.log(data)
+            const songs = data.results.filter(item => item.wrapperType === 'track' )
+            setAlbumData(songs)
+        }
+            fetchData()
+    },[id])
+
+        const display = albumData.map(song => {
+            return(
+                <p key = {song.trackId}>{song.trackName}</p>
+            )
+        })
+    
     return(
         <div>
-            <h2>The id passed was: {id}</h2>
-            <p>Album Data Goes Here!</p>
+            <NavButtons />
+            {display}
+   
         </div>
     )
 }
